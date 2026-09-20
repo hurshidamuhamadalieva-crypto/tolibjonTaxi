@@ -10,7 +10,7 @@ api_hash = '0d1ee14a452e04c86c4dd37709bb7a2f'
 # =================== TELEGRAM CLIENT ===================
 from telethon.sessions import StringSession
 
-SESSION = "1ApWapzMBu2H5U15z-uMRZFW9yLbpeA8wIz8X4c3Hc3PfKXI5b__o9Sc3t80uxS9PNFJgC5Vi7kZ7ENQgtFE-KLhYQMIu_PMpQrg9502KmxhbrCF91AgnjgO438Q2-glDXIK-U-15WuHtnS0Tn4ITKzo54XvXgCAAPCd5lg0xtGspAbUw3V0Al5w0cj3C5pZ3BEnkmvlOkNhV3zXkdMdmaZcpsjGqnr87NNkVGpUO_kvAKbN3En4oz6TgmCatCJe03sGIMQzMkOxidHM55h-XLtIu6HKrZw3vkYgIbgTzluXn13WWERute0aWbUv6aAtQ6SyB8S-eFuaMqd9TeehwIqdjdUqYdSo="
+SESSION = "1ApWapzMBuyUtaQ9Tx72OMJ6eUUKgiv-Tck8O2B-CHWzXjh8NASk84R6_ZrudiWUVDp4PaNTP7b-jG9GJPIgz_JPrJiXmitSxWyF4JF_cDB8V1LiaFh5anqbVkP-bLK7u1ozCfo62_tFQHnA9cGNIiyE4gvCoVKiT0jjzyPAgCZoys4YIcvVytHeFPOATYfglbpVKksQE4wkguSzwHDzKY2e8v5KpwMBrgZ74V-rgcQzB9negbYoAPGofaRkMFyQqsh3X-5I8GXpZYuOE3NEaF4DTxnPvB6o8AWoKRv6c3pxyDfz1GQquXq7HEPxeSUTWWjlCTR3fNFPLDAfZeu3E39700GFgwVY="
 client = TelegramClient(
     StringSession(SESSION),
     api_id,
@@ -21,12 +21,12 @@ client = TelegramClient(
 )
 # =================== SKIP CHAT ID ===================
 SKIP_CHAT_IDS = [
-    -1003431421989
+    -1004441188512
 ]
 
 # =================== TARGET CHAT ID ===================
 TARGET_CHAT_IDS = [
-    -1003431421989
+    -1004441188512
 ]
 
 # =================== KALIT SO‘ZLAR ===================
@@ -136,7 +136,7 @@ async def handler(event):
         phone_display = phone if phone else "Berkitilgan"
 
         message_text = (
-            f"🔈  <b>XAMROH TAXI</b>\n\n"
+            f"🔈  <b>SIGNAL BOT N1</b>\n\n"
             f"📝 <b></b> {text}\n\n"
             f"📍  <b>Guruh:</b> {group_display}\n\n"
             f"👤 <b></b> {owner_display}\n\n"
