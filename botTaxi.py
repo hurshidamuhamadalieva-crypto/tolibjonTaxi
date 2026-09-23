@@ -21,12 +21,12 @@ client = TelegramClient(
 # =================== SKIP CHAT ID ===================
 # Ushbu guruh/kanallardagi xabarlar hech qachon tekshirilmaydi.
 SKIP_CHAT_IDS = [
-    -1004448223170
+    -1004441188512
 ]
 
 # =================== TARGET CHAT ID ===================
 TARGET_CHAT_IDS = [
-    -1004448223170
+    -1004441188512
 ]
 
 # =================== KALIT SO'ZLAR (LOTIN + KIRILL) ===================
@@ -46,7 +46,45 @@ KEYWORDS_BASE_ODAM_BOR = [
     '3-kishi bor', '3-ta ayolkishi bor', '3-ta kishi bor', '3-ta odam bor', '3kishi bor',
     '3kishi ekan', '3kishimiz', '3ta odam bor', '3та одам бор', '4 kishi bor edi',
     '4 kishi bor ekan', '4 kishimiz', '4 odam bor', '4 киши бор', '4 одам бор', '4-kishi bor',
-    '4-ta ayolkishi bor',
+    '4-ta ayolkishi bor', '4-ta kishi bor', '4-ta odam bor', '4kishi bor', '4kishi ekan',
+    '4kishimiz', '4ta odam bor', '4та одам бор', 'amirsoydan 1kishi',
+    'ayol kishi bor mashina sorashyabdi', 'ayollar bor mashina kerak', 'ayollar bor moshina kerak',
+    'bagdodan 1kishi bor', 'bir qiz bir bola bor', 'bitta odam bor', "bog'doddan 2kishi",
+    'Chirchiqdan 1 kishi', 'chirchiqdan 1kishi', 'ertagaga qoqonga 1kishi', "farg'onaga 1kishi",
+    "farg'onaga 2kishi", "farg'onaga 3kishi", "farg'onaga 4kishi", 'fargonadan 1kishi',
+    'fargonaga 2kishi', 'fargonaga odam bor', "g'azalkantdan 2 kishi", "g'azalkentdan 1kishi",
+    'gazalkentdan 1kishi', 'gazalkentdan 2kishi', 'ikkita odam bor', 'kampilek odam bor',
+    'katta yoshli ayol bor', 'kompilek odam bor', 'komplek odam bor', 'komplekt odam bor',
+    "o'zimizdan 1kishi", 'odam bor', 'odam bor 1', 'odam bor 2', 'odam bor 3', 'odam bor 4',
+    'odam bor edi', 'odam bor ekan', 'odam borakan', 'odam.bor', 'odambor', 'ozimizdan 1kishi',
+    'ozimizdan 2 kishi', 'Qibraydan 1 kishi', 'qiz bola bor', 'qoqondan odam bor',
+    'qoqonga 1kishi', 'qoqonga odam bor', 'rishtonga 1kishi', 'rishtonga 1kishi bor',
+    'rishtonga 2kishi', 'rishtonga 3kishi', 'rishtonga 4kishi', 'rishtonga bir kishi',
+    'rishtonga odam bor', 'tashkentdan rishtonga odam bor', "to'rtta odam bor", 'tortta odam bor',
+    'toshkenda odam bor', "toshkendan bog'dodga odam bor", "toshkendan farg'onaga odam bor",
+    'Toshkenga 1kishi', 'toshkenga 1kishi bor', 'toshkentdan 1 kishi bering degan',
+    'toshkentdan 4 kishi bering deganga', 'toshkentdan bagdodga odam bor', 'toshkentdan bir kishi',
+    'Toshkentdan Rishtonga 1odam bor', 'toshkentga 1kishi', 'toshkentga 1kishi bor',
+    'Toshkentga 1ta odam bor', 'toshkentga 2kishi', 'toshkentga 3kishi', 'toshkentga 4kishi',
+    'toshkentga odam bor', 'toshketga 1kishi', 'towga 1kishi', 'towga 2kishi', 'towga 3kishi',
+    'towga 4kishi', 'uchkoprikda 1kishi', 'uchkoprikdan 1kishi', 'uchta odam bor',
+    'yangiqorgondan 1kishi', 'Yangiyuldan 1 kishi', 'Zangiotadan 1 kishi', 'амирсойдан 1киши',
+    'аёл киши бор машина сўрашяпти', 'аёллар бор машина керак', 'бағдодан 1киши бор',
+    'бир қиз бир бола бор', 'битта одам бор', 'боғдоддан 2киши', 'газалкентдан 1киши',
+    'газалкентдан 2киши', 'зангиотадан 1 киши', 'иккита одам бор', 'кампилек одам бор',
+    'катта ёшли аёл бор', 'компилек одам бор', 'компилект odam бор', 'комплек одам бор',
+    'комплект одам бор', 'одам бор', 'одам бор 1', 'одам бор 2', 'одам бор 3', 'одам бор 4',
+    'одам бор эди', 'одам бор экан', 'озимиздан 1киши', 'озимиздан 2 киши', 'риштонга 1 киши',
+    'риштонга одам бор', 'ташкентдан риштонга одам бор', 'тошкентга 1 киши', 'тошкентга одам бор',
+    'тошкентдан бағдодга одам бор', 'тошкентдан боғдодга одам бор',
+    'тошкентдан фарғонага одам бор', 'тўрта одам бор', 'тўртта одам бор', 'учкўприкда 1киши',
+    'учкўприкдан 1киши', 'учта одам бор', 'фарғонага 1 киши', 'фарғонага 2киши',
+    'фарғонага одам бор', 'фарғонадан 1киши', 'чирчиқдан 1 киши', 'чирчиқдан 1киши',
+    'эртагага қўқонга 1киши', 'янгийўлдан 1 киши', 'янгиқўрғондан 1киши', 'ўзимиздан 1киши',
+    'ғазалкентдан 1киши', 'ғазалкентдан 2 киши', 'қибрайдан 1 киши', 'қиз бола бор',
+    'қўқонга 1киши', 'қўқонга одам бор', 'қўқондан одам бор', "Bitta odam Bor",
+    "rishtonda bitaa odam", "Rishton dan Toshga 1ta odam bor", "pochta bor ekan", "pochta borekan",
+    "pochta borakan", "bochta bor edi", "oldi mestaga odam bor", "bogdodga odam bor",
 ]
 
 # --- MASHINA / MOSHINA KERAK ---
@@ -77,7 +115,21 @@ KEYWORDS_BASE_KETADI_BOSHQA = [
 KEYWORDS_BASE_BOSHQA = [
     '1 kiwi bor edi', '1 kiwi bor ekan', '1 ta kamlarga', '1ta kamla', '1ta kamlarga',
     '2 kiwi bor edi', '2 kiwi bor ekan', '2 kiwimiz', '2kiwimiz', '3 kiwi bor edi',
-    '3 kiwi bor ekan', 'ўзимиздан ким бор',
+    '3 kiwi bor ekan', '3 kiwimiz', '3kiwimiz', '4 kiwi bor edi', '4 kiwi bor ekan', '4 kiwimiz',
+    '4kiwimiz', 'bagajga yuk bor', "birinchi so'raganga", 'bitta kamlarga', 'boshi bormi',
+    'fargonaga kim yuryabdi', 'kim yurapti akalar', 'kim yuryabdi', "o'zimizdan kim bor",
+    'ozimizdan kim bor', 'poshta  bor', 'Rishotondan 1kiwi', 'rishotondan 1kiwi bor',
+    'shopir kerak', 'srochni kim yuryabdi', 'srochni yuradigan taxi kerak',
+    'toshkentdan 1 kiwi bering degan', 'toshkentdan 1 kiwi bering deganga',
+    'toshkentdan 2 kiwi bering deganga', 'toshkentdan 3 kiwi bering deganga',
+    'toshkentdan 4 kiwi bering deganga', 'yuk bor', 'yuradiganla bormi', 'yuradiganlar bormi',
+    'yurayotganla bomi', 'yurayotganla bormi', 'yurayotganlar bomi', 'yurayotganlar bormi',
+    'yurediganla bormi', 'yurediganlar bomi', 'yurediganlar bormi', 'доставкa бор',
+    'доставкa керак', 'кетвотди', 'кетишади', 'кетяпт', 'ким юрапти акалар', 'ким юряпти',
+    'кобальт керак', 'машina кераа', 'озимиздан ким бор', 'срочни юрадиган такси керак',
+    'фарғонага ким юряпти', 'шопир керак', 'юрадиганла борми', 'юрадиганлар борми',
+    'юраётганла боми', 'юраётганла борми', 'юраётганлар боми', 'юраётганлар борми',
+    'юредигaнла борми', 'юредигaнлар боми', 'юредигaнлар борми', 'ўзимиздан ким бор',
 ]
 
 KEYWORDS_BASE = (
@@ -90,15 +142,6 @@ KEYWORDS_BASE = (
 # Quyidagilar - yuqoridagi lotincha so'zlarning kirillcha (o'zbek-kirill)
 # ko'rinishi, avtomatik harf-ma-harf o'giril(transliteratsiya qilin)gan va
 # faqat mavjud bo'lmagan (hali ro'yxatda yo'q) so'zlargina qo'shilgan.
-
-# --- ODAM / KISHI / QIZ / AYOL BOR — kirillcha ---
-KEYWORDS_TRANSLIT_ODAM_BOR = [
-    '1 киши бор еди', '1 киши бор екан', '1 киши екан', '1киши бор', '1киши екан', '1одам бор',
-    '1та қиз бола бор', '1та қиз бор', '2 киши бор еди', '2 киши бор екан', '2 киши екан',
-    '2 кишимиз', '2-киши бор', '2-та аёлкиши бор', '2-та киши бор', '2-та одам бор', '2киши бор',
-    '2киши екан', '2кишимиз', '3 киши бор еди', '3 киши бор екан', '3 киши екан', '3 кишимиз',
-    '3-киши бор',
-]
 
 # --- MASHINA / MOSHINA KERAK — kirillcha ---
 KEYWORDS_TRANSLIT_MASHINA_KERAK = [
@@ -121,11 +164,16 @@ KEYWORDS_TRANSLIT_BOSHQA = [
     '1 киwи бор еди', '1 киwи бор екан', '1 та камларга', '1та камла', '1та камларга',
     '2 киwи бор еди', '2 киwи бор екан', '2 киwимиз', '2киwимиз', '3 киwи бор еди',
     '3 киwи бор екан', '3 киwимиз', '3киwимиз', '4 киwи бор еди', '4 киwи бор екан', '4 киwимиз',
-    '4киwимиз', 
+    '4киwимиз', 'багажга юк бор', 'биринчи сўраганга', 'битта камларга', 'боши борми',
+    'ким юрябди', 'ришотондан 1киwи', 'ришотондан 1киwи бор', 'срочни ким юрябди',
+    'срочни юрадиган тахи керак', 'тошкентдан 1 киwи беринг деган',
+    'тошкентдан 1 киwи беринг деганга', 'тошкентдан 2 киwи беринг деганга',
+    'тошкентдан 3 киwи беринг деганга', 'тошкентдан 4 киwи беринг деганга', 'фаргонага ким юрябди',
+    'юк бор', 'юредиганла борми', 'юредиганлар боми', 'юредиганлар борми',
+    "пучта бор",
 ]
 
 KEYWORDS_TRANSLIT = (
-    KEYWORDS_TRANSLIT_ODAM_BOR +
     KEYWORDS_TRANSLIT_MASHINA_KERAK +
     KEYWORDS_TRANSLIT_POCHTA_DOSTAVKA +
     KEYWORDS_TRANSLIT_KETADI_BOSHQA +
