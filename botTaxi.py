@@ -289,23 +289,20 @@ async def handler(event):
         msg_link = build_message_link(chat_id, chat_info['username'], event.id)
 
         lines = [
-            "🔈  <b>Elon topildi!</b>",
             "",
             f"📝  <b>Elon:</b> {text}",
             "",
             f"📍  <b>Guruh:</b> {group_name}",
             "",
-            f"👤  <b>User:</b> {owner_display}",
+            f"  <b>User:</b> {owner_display}",
             "",
-            f"📞  <b>Raqam:</b> {phone_display}",
-            "",
-            "_________________________",
+            f"  <b>Raqam:</b> {phone_display}",
             "",
         ]
         if msg_link:
-            lines.append(f"👉 <a href='{msg_link}'>Xabarga o'tish</a>")
+            lines.append(f" <a href='{msg_link}'>Xabarga o'tish</a>")
         if profile_link:
-            lines.append(f"🙍 {profile_link}")
+            lines.append(f" {profile_link}")
 
         message_text = "\n".join(lines)
 
