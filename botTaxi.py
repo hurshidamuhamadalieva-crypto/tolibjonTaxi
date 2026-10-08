@@ -183,6 +183,14 @@ def build_profile(sender):
     return "Berkitilgan", "Berkitilgan"
 
 # =================== HANDLER ===================
+async def safe(coro):
+    """Xato bo'lsa botni to'xtatmaydi, None qaytaradi."""
+    try:
+        return await coro
+    except Exception as e:
+        print("⚠️ Ma'lumot olib bo'lmadi:", e)
+        return None
+
 @client.on(events.NewMessage(incoming=True))
 async def handler(event):
     try:
@@ -197,19 +205,12 @@ async def handler(event):
         if not text or not KEYWORDS_RE.search(text):
             return
 
-        async def safe(coro):
-            try:
-                return await coro
-            except Exception as e:
-                print("⚠️ Ma'lumot olib bo'lmadi:", e)
-                return None
-
         chat, sender = await asyncio.gather(
             safe(event.get_chat()),
             safe(event.get_sender())
         )
 
-        group_name = getattr(chat, 'title', 'Nomaʼlum guruh')
+        group_name = html.escape(getattr(chat, 'title', None) or 'Nomaʼlum guruh')
         if getattr(chat, 'username', None):
             group_link = f"https://t.me/{chat.username}/{event.id}"
             group_display = f"<a href='{group_link}'>{group_name}</a>"
@@ -252,6 +253,9 @@ async def handler(event):
                 print(f"📨 Yuborildi → {target_id}")
             except Exception as e:
                 print(f"❌ {target_id} ga yuborib bo'lmadi:", e)
+
+    except Exception as e:
+        print("❌ Xatolik:", e)
 
 # =================== START ===================
 print("🚕 Taxi bot ishga tushdi...")
