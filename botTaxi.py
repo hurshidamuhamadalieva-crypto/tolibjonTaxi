@@ -197,9 +197,16 @@ async def handler(event):
         if not text or not KEYWORDS_RE.search(text):
             return
 
+        async def safe(coro):
+            try:
+                return await coro
+            except Exception as e:
+                print("⚠️ Ma'lumot olib bo'lmadi:", e)
+                return None
+
         chat, sender = await asyncio.gather(
-            event.get_chat(),
-            event.get_sender()
+            safe(event.get_chat()),
+            safe(event.get_sender())
         )
 
         group_name = getattr(chat, 'title', 'Nomaʼlum guruh')
@@ -236,15 +243,15 @@ async def handler(event):
         )
 
         for target_id in TARGET_CHAT_IDS:
-            await client.send_message(
-                target_id,
-                message_text,
-                parse_mode='html'
-            )
-            print(f"📨 Yuborildi → {target_id}")
-
-    except Exception as e:
-        print("❌ Xatolik:", e)
+            try:
+                await client.send_message(
+                    target_id,
+                    message_text,
+                    parse_mode='html'
+                )
+                print(f"📨 Yuborildi → {target_id}")
+            except Exception as e:
+                print(f"❌ {target_id} ga yuborib bo'lmadi:", e)
 
 # =================== START ===================
 print("🚕 Taxi bot ishga tushdi...")
