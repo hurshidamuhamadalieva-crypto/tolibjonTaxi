@@ -142,23 +142,20 @@ async def handler(event):
         )
 
         group_name = getattr(chat, 'title', 'Nomaʼlum guruh')
+        if getattr(chat, 'username', None):
+            group_link = f"https://t.me/{chat.username}/{event.id}"
+            group_display = f"<a href='{group_link}'>{group_name}</a>"
+        else:
+            group_display = group_name
 
         username = getattr(sender, 'username', None)
-        owner_display = f"@{username}" if username else "БЕРКИТИЛГАН"
+        owner_display = f"@{username}" if username else "Berkitilgan"
 
         sender_id = getattr(sender, 'id', None)
-        sender_hash = getattr(sender, 'access_hash', None)
-
-        if username:
-            # Username orqali profilga o'tish eng ishonchli usul, hech qachon uzilib qolmaydi
-            profile_link = f"<a href='https://t.me/{username}'>ПРОФИЛГА ЎТИШ</a>"
-        elif sender_id and sender_hash:
-            # access_hash mavjud bo'lsa tg://user link ham ishonchli ishlaydi
-            profile_link = f"<a href='tg://user?id={sender_id}&hash={sender_hash}'>ПРОФИЛГА ЎТИШ</a>"
-        elif sender_id:
-            profile_link = f"<a href='tg://user?id={sender_id}'>ПРОФИЛГА ЎТИШ</a>"
-        else:
-            profile_link = "БЕРКИТИЛГАН"
+        profile_link = (
+            f"<a href='tg://user?id={sender_id}'>Profilga o‘tish</a>"
+            if sender_id else "Berkitilgan"
+        )
 
         phone = normalize_phone(sender.phone) if sender.phone else None
         if not phone:
@@ -167,16 +164,14 @@ async def handler(event):
                 if phone:
                     break
 
-        phone_display = phone if phone else "БЕРКИТИЛГАН"
+        phone_display = phone if phone else "Berkitilgan"
 
         message_text = (
-            f"🚨 <b>ЯНГИ ЗАКАЗ</b>\n"
-            f"________________\n\n"
-            f"{text}\n"
-            f"________________\n\n"
-            f"📍 <b>ГУРУҲ : </b> {group_name}\n"
-            f"👤 <b>КЛЕНТ ЛИЧКАСИ : </b> {owner_display}\n"
-            f"📞 <b>КЛЕНТ НОМЕРИ : </b> {phone_display}\n\n"
+            f"🔈  <b>Elon topildi</b>\n\n"
+            f"📝 <b></b> {text}\n\n"
+            f"📍  <b>Guruh:</b> {group_display}\n\n"
+            f"👤 <b></b> {owner_display}\n\n"
+            f"📞 <b></b> {phone_display}\n\n"
             f"👉🏻 <b></b> {profile_link}"
         )
 
