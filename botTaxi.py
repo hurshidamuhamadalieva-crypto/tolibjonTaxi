@@ -1,4 +1,5 @@
 import re
+import html
 import asyncio
 from telethon import TelegramClient, events
 
@@ -25,8 +26,7 @@ SKIP_CHAT_IDS = [
 TARGET_CHAT_IDS = [
     -1004441188512
 ]
-
-# =================== KALIT SO'ZLAR ===================
+# =================== KALIT SO‘ZLAR ===================
 KEYWORDS = [
     # odam bor
     'odam bor','odambor','odam bor ekan','odam bor edi','odam borakan',
@@ -46,6 +46,7 @@ KEYWORDS = [
     'Chirchiqdan 1 kishi', 'Yangiyuldan 1 kishi', 'Zangiotadan 1 kishi', 'Qibraydan 1 kishi', '1 kishi bor',
     '2-ta odam bor', '2-kishi bor', '3-ta odam bor', '3-kishi bor', '4-ta odam bor', '4-kishi bor',
     '2-ta kishi bor', '3-ta kishi bor', '4-ta kishi bor', '2-ta ayolkishi bor', '3-ta ayolkishi bor', '4-ta ayolkishi bor', "odam.bor", 
+    "kishi bor", "1 kishi bor", "2 kishi bor", "2kishi bor",
     
     # mashina kerak
     'mashina kerak','mashina kere','mashina kerek','mashina kera','mashina keraa',
@@ -110,16 +111,76 @@ KEYWORDS = [
 
 KEYWORDS_RE = re.compile("|".join(re.escape(k) for k in KEYWORDS), re.IGNORECASE)
 
-# =================== TELEFON REGEX ===================
-PHONE_RE = re.compile(r'(\+?998[\d\-\s\(\)]{9,15}|9\d{8})')
+# =================== TELEFON ===================
+# O'zbekiston operator kodlari
+VALID_CODES = {
+    '20', '33', '50', '55', '61', '62', '65', '66', '67', '69', '70', '71',
+    '72', '73', '74', '75', '76', '77', '78', '79', '88', '90', '91', '93',
+    '94', '95', '97', '98', '99'
+}
+
+# +998 90 123 45 67 / 90-123-45-67 / 901234567 / (90)1234567 / 998901234567
+PHONE_RE = re.compile(
+    r'(?<!\d)(?:\+?\s*998)?[\s\-\(\)\.]*'
+    r'(\d{2})[\s\-\(\)\.]*(\d{3})[\s\-\(\)\.]*(\d{2})[\s\-\(\)\.]*(\d{2})(?!\d)'
+)
 
 def normalize_phone(raw):
+    """Profildagi raqamni +998XXXXXXXXX ko'rinishga keltiradi."""
+    if not raw:
+        return None
     digits = re.sub(r'\D', '', raw)
     if digits.startswith('998') and len(digits) >= 12:
         return '+' + digits[:12]
     if len(digits) == 9:
         return '+998' + digits
     return None
+
+def extract_phones(text):
+    """Matndagi barcha to'g'ri raqamlarni qaytaradi."""
+    phones = []
+    for m in PHONE_RE.finditer(text):
+        if m.group(1) not in VALID_CODES:
+            continue
+        number = '+998' + ''.join(m.groups())
+        if number not in phones:
+            phones.append(number)
+    return phones
+
+# =================== PROFIL ===================
+def get_username(sender):
+    username = getattr(sender, 'username', None)
+    if username:
+        return username
+    # yangi Telegramda bir nechta username bo'lishi mumkin
+    for u in (getattr(sender, 'usernames', None) or []):
+        if getattr(u, 'active', False) and getattr(u, 'username', None):
+            return u.username
+    return None
+
+def build_profile(sender):
+    """(egasi_matni, profil_havolasi) qaytaradi.
+    Username bor     -> t.me/username
+    Username yo'q    -> tg://user?id=ID
+    Ikkalasi ham yo'q -> Berkitilgan
+    """
+    if sender is None:
+        return "Berkitilgan", "Berkitilgan"
+
+    username = get_username(sender)
+    sender_id = getattr(sender, 'id', None)
+
+    if username:
+        return (
+            f"@{username}",
+            f"<a href='https://t.me/{username}'>Profilga o‘tish</a>"
+        )
+    if sender_id:
+        return (
+            "Username yo‘q",
+            f"<a href='tg://user?id={sender_id}'>Profilga o‘tish</a>"
+        )
+    return "Berkitilgan", "Berkitilgan"
 
 # =================== HANDLER ===================
 @client.on(events.NewMessage(incoming=True))
@@ -148,27 +209,26 @@ async def handler(event):
         else:
             group_display = group_name
 
-        username = getattr(sender, 'username', None)
-        owner_display = f"@{username}" if username else "Berkitilgan"
+        # ---- profil: username bo'lmasa id bilan ----
+        owner_display, profile_link = build_profile(sender)
 
-        sender_id = getattr(sender, 'id', None)
-        profile_link = (
-            f"<a href='tg://user?id={sender_id}'>Profilga o‘tish</a>"
-            if sender_id else "Berkitilgan"
+        # ---- telefon: avval profildan, keyin matndan ----
+        phones = []
+        p = normalize_phone(getattr(sender, 'phone', None))
+        if p:
+            phones.append(p)
+        for ph in extract_phones(text):
+            if ph not in phones:
+                phones.append(ph)
+
+        phone_display = (
+            "\n".join(f"<code>{ph}</code>" for ph in phones)
+            if phones else "Berkitilgan"
         )
-
-        phone = normalize_phone(sender.phone) if sender.phone else None
-        if not phone:
-            for m in PHONE_RE.finditer(text):
-                phone = normalize_phone(m.group(0))
-                if phone:
-                    break
-
-        phone_display = phone if phone else "Berkitilgan"
 
         message_text = (
             f"🔈  <b>Elon topildi</b>\n\n"
-            f"📝 <b></b> {text}\n\n"
+            f"📝 <b></b> {html.escape(text)}\n\n"
             f"📍  <b>Guruh:</b> {group_display}\n\n"
             f"👤 <b></b> {owner_display}\n\n"
             f"📞 <b></b> {phone_display}\n\n"
